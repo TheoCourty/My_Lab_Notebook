@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import os
 
 
 class Ui_MainWindow(object):
@@ -97,35 +97,50 @@ class JournalWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.label = QtWidgets.QLabel("Another Window")
         self.setObjectName(str(date.day())+"-" + str(date.month())+"-" +str(date.year()))
+        self.day = date.day()
+        self.month = date.month()
+        self.year = date.year()
         self.resize(600, 1000)
         self.textEditor = QtWidgets.QTextEdit(self)
         self.textEditor.resize(600,1000)
         self.textEditor.setFontPointSize(16) 
-        self.setWindowTitle(str(date.day())+"-" + str(date.month())+"-" +str(date.year()))
+        self.setWindowTitle(str(self.day)+"-" + str(self.month)+"-" +str(self.year))
         self.saveButton = QtWidgets.QPushButton(self)
         self.saveButton.resize(70,50)
         self.saveButton.setText("Save")
         self.saveButton.setGeometry(QtCore.QRect(530,950,70,50))
+        self.load_markdown()
         self.saveButton.clicked.connect(self.save_markdown)
 
     def save_markdown(self):
         # Open a file dialog to choose save location
-        options = QtWidgets.QFileDialog.Options()
-        file_path, _ = QtWidgets.QFileDialog.getSaveFileName(
-            self, "Save Markdown File", "", "Markdown Files (*.md);;All Files (*)", options=options
-        )
-
-        if file_path:
+        dir_path = "Journal/" +str(self.year) + "/" + str(self.month) + "/" + str(self.day)
+        file_path = dir_path +"/main_text.md"
             # Save the content of QTextEdit to the file
-            with open(file_path, "w", encoding="utf-8") as file:
-                file.write(self.textEditor.toPlainText())
+        with open(file_path, "w", encoding="utf-8") as file:
+            file.write(self.textEditor.toPlainText())
 
-    def read_markdown(self):
+    def load_markdown(self):
 
         """
         This function will be used to open existing markdowns corresponding to the days of the journal
+        If no md is associated with the day, it create a file corresponding to this day
         """
-        pass
+
+        dir_path = "Journal/" +str(self.year) + "/" + str(self.month) + "/" + str(self.day)
+        print(dir_path)
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path,exist_ok=True)
+            return
+        
+        file_path = dir_path +"/main_text.md"
+
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as file:
+                markdown_text = file.read()
+                self.textEditor.setPlainText(markdown_text)
+
+        return
 
 
 if __name__ == "__main__":
