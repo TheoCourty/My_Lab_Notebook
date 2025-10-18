@@ -44,9 +44,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.button_1.setText(_translate("MainWindow", "I think"))
+        self.button_1.setText(_translate("MainWindow", "This is a button"))
         self.checkBox.setText(_translate("MainWindow", "CheckBox"))
-        self.label_1.setText(_translate("MainWindow", "Hello you guys"))
+        self.label_1.setText(_translate("MainWindow", "Hello"))
         self.menufile.setTitle(_translate("MainWindow", "file"))
 
 

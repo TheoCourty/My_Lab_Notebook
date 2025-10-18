@@ -20,13 +20,13 @@ class MyWindow(QMainWindow):
         height = 500
         
         self.setGeometry(xpos, ypos, width, height)
-        self.setWindowTitle("First breath of my app")
+        self.setWindowTitle("First window")
         
     def update(self):
         self.label.adjustSize()
     
     def clicked(self):
-        self.label.setText("C'est bien :)")
+        self.label.setText("Nice :)")
         self.update()
         
 
@@ -39,7 +39,7 @@ class MyWindow(QMainWindow):
 
         
         self.button_1 = QtWidgets.QPushButton(self)
-        self.button_1.setText("Clique salope :)")
+        self.button_1.setText("Clique :)")
         self.button_1.move(50,100)
         self.button_1.clicked.connect(self.clicked)
         
